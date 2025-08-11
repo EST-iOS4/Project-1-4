@@ -1,0 +1,3 @@
+# Xcode 프로젝트 파일 병합 시 union 방식 적용
+*.pbxproj binary merge=union
+*.xcworkspace binary merge=union
