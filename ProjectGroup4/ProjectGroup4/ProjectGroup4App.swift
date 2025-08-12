@@ -14,6 +14,6 @@ struct ProjectGroup4App: App {
         WindowGroup {
             SplashView()
         }
-    
+        .modelContainer(for: ResultSuite.self)
     }
 }

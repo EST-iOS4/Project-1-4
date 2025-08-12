@@ -5,7 +5,10 @@
 //  Created by 황동혁 on 8/12/25.
 //
 
-struct QuizResult{
+struct QuizResult: Identifiable, Hashable, Codable {
+    // id
+    var id: String { self.image }
+    
     // 퀴즈 이미지
     let image: String
     
