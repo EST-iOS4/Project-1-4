@@ -19,6 +19,8 @@ struct QuizSectionView: View {
     @State private var userInput: String = ""
     @State private var isCorrect : Bool = false
     @State private var toResultView: Bool = false
+    @Binding var toQuizSectionView : Bool
+    @Binding var saveSuccessToastMessage : Bool
     
     var body: some View {
         
@@ -36,6 +38,8 @@ struct QuizSectionView: View {
             
             Button{
                 if currentIndex == quizContent.count - 1 {
+                    compareAnswer()
+                    updateQuizResult()
                     toResultView = true
                 } else {
                     compareAnswer()
@@ -52,7 +56,7 @@ struct QuizSectionView: View {
                 
             }
         }
-        .navigationDestination(isPresented: $toResultView, destination: {ResultView(results: quizResult)})
+        .navigationDestination(isPresented: $toResultView, destination: {ResultView(results: quizResult, toQuizSectionView: $toQuizSectionView, saveSuccessToastMessage: $saveSuccessToastMessage)})
         
         .onAppear{
             quizContent = QuizData.getData(category: category, difficulty: difficulty)
@@ -88,5 +92,5 @@ struct QuizSectionView: View {
 }
 
 #Preview {
-    QuizSectionView(category: .animals, difficulty: .medium)
+    QuizSectionView(category: .animals, difficulty: .medium, toQuizSectionView: .constant(false), saveSuccessToastMessage: .constant(false))
 }
