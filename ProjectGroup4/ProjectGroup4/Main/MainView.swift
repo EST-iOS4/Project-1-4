@@ -13,6 +13,7 @@ struct MainView: View {
     @State var toQuizSectionView : Bool = false
     @State var category : QuizData.Category = .animals
     @State var difficulty : QuizData.Difficulty = .easy
+    @State var saveSuccessToastMessage : Bool = false
     var body: some View {
         
         NavigationStack {
@@ -25,23 +26,28 @@ struct MainView: View {
                     }
             }
             else {
-                VStack(spacing: 50) {
-                    Button{
-                        showQuizSetting = true
-                    } label:{
-                        Text("퀴즈 시작")
-                    }
-                    
-                    Button{
+                ZStack{
+                    VStack(spacing: 50) {
+                        Button{
+                            showQuizSetting = true
+                        } label:{
+                            Text("퀴즈 시작")
+                        }
                         
-                    } label:{
-                        Text("지난 결과")
+                        Button{
+                            
+                        } label:{
+                            Text("지난 결과")
+                        }
+                    }
+                    if(saveSuccessToastMessage){
+                        ToastMessage(message: "저장 완료되었습니다")
                     }
                 }
                 .sheet(isPresented: $showQuizSetting){
                     QuizSettingView(selectedCategory: $category, selectedDifficulty: $difficulty,toQuizSectionView: $toQuizSectionView)
                 }
-                .navigationDestination(isPresented: $toQuizSectionView, destination: {QuizSectionView(category: category, difficulty: difficulty)})
+                .navigationDestination(isPresented: $toQuizSectionView, destination: {QuizSectionView(category: category, difficulty: difficulty,toQuizSectionView: $toQuizSectionView, saveSuccessToastMessage: $saveSuccessToastMessage)})
                 .onChange(of:toQuizSectionView){
                     print(toQuizSectionView)
                 }

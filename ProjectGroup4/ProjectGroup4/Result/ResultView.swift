@@ -14,7 +14,12 @@ struct ResultView: View {
     @Environment(\.modelContext) private var modelContext
 
     @State private var isSaved = false
+
     var results: [QuizResult]
+    
+    @Binding var toQuizSectionView : Bool
+    
+    @Binding var saveSuccessToastMessage : Bool
     var correctCount: Int {
         self.results
             .filter { $0.isCorrect == true }
@@ -32,6 +37,7 @@ struct ResultView: View {
             SaveButton
         }
         .navigationTitle("결과")
+        .navigationBarBackButtonHidden(true)
     }
     
     private func saveResult() {
@@ -61,6 +67,14 @@ extension ResultView {
             modelContext.insert(newSuite)
             isSaved = true
             
+            
+            toQuizSectionView = false
+            saveSuccessToastMessage = true
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                saveSuccessToastMessage = false
+            }
+            
             print("새로운 ResultSuite가 저장되었습니다. ID: \(newSuite.id)")
         } label: {
             Text(isSaved ? "결과가 저장되었습니다" : "저장하기" )
@@ -87,6 +101,6 @@ extension ResultView {
     ResultView(results: [
         QuizResult(image: "사자", answer: "사자", correctAnswer: "사자", isCorrect: true),
         QuizResult(image: "호랑이", answer: "여우", correctAnswer: "호랑이", isCorrect: false)
-    ])
+    ], toQuizSectionView: .constant(true), saveSuccessToastMessage: .constant(false))
         .modelContainer(container)
 }
