@@ -12,7 +12,7 @@ import SwiftData
 struct ProjectGroup4App: App {
     var body: some Scene {
         WindowGroup {
-            SplashView()
+            MainView()
         }
         .modelContainer(for: ResultSuite.self)
     }
