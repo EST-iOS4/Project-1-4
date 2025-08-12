@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct ProjectGroup4App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashView()
         }
+    
     }
 }
