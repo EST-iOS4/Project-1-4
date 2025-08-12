@@ -35,9 +35,7 @@ struct ResultView: View {
     }
     
     private func saveResult() {
-        let resultSuite = ResultSuite(results: results, created: Date())
-        modelContext.insert(resultSuite)
-        isSaved = true
+        
     }
 }
 
@@ -58,7 +56,12 @@ extension ResultView {
     var SaveButton: some View {
         Button {
             print("SwiftData로 저장")
-            saveResult()
+            
+            let newSuite = ResultSuite(results: results, created: Date())
+            modelContext.insert(newSuite)
+            isSaved = true
+            
+            print("새로운 ResultSuite가 저장되었습니다. ID: \(newSuite.id)")
         } label: {
             Text(isSaved ? "결과가 저장되었습니다" : "저장하기" )
                 .font(.headline)

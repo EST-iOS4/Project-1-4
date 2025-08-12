@@ -10,11 +10,13 @@ import SwiftData
 
 @Model
 final class ResultSuite {
+    @Attribute(.unique)
     var id: UUID
+    
     var results: [QuizResult]
     var created: Date
     
-    init(id: UUID = UUID(), results: [QuizResult], created: Date) {
+    init(id: UUID = UUID(), results: [QuizResult], created: Date = .now) {
         self.id = id
         self.results = results
         self.created = created
