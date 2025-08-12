@@ -9,16 +9,17 @@ import SwiftUI
 
 struct SplashView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            VStack {
+                Text("3초 후에 메인 화면으로 넘어갑니다.")
+                    .font(.title2)
+                    .padding()
+            }
+            .padding()
         }
-        .padding()
     }
 }
-
+//3초 뒤에 메인 뷰로 넘어가기
 #Preview {
     SplashView()
 }
