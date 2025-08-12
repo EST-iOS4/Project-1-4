@@ -14,6 +14,6 @@ struct ProjectGroup4App: App {
         WindowGroup {
             MainView()
         }
-    
+        .modelContainer(for: ResultSuite.self)
     }
 }
