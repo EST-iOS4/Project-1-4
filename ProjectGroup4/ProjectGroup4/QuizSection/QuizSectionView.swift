@@ -76,10 +76,16 @@ struct QuizSectionView: View {
             }
             
             Text(answerHint)
+                .fontWeight(.semibold)
+                .font(.title)
             
             Image(currentImage)
                 .resizable()
                 .scaledToFit()
+                .background(.black)
+                .frame(width: 300,height: 300)
+                .background(.black)
+                
             
             
             TextField("정답을 입력하세요", text: $userInput)
@@ -156,5 +162,5 @@ struct QuizSectionView: View {
 }
 
 #Preview {
-    QuizSectionView(category: .animals, difficulty: .medium, toQuizSectionView: .constant(false), saveSuccessToastMessage: .constant(false))
+    QuizSectionView(category: .animals, difficulty: .hard, toQuizSectionView: .constant(false), saveSuccessToastMessage: .constant(false))
 }
