@@ -14,12 +14,18 @@ struct ResultView: View {
     @Environment(\.modelContext) private var modelContext
 
     @State private var isSaved = false
+    
+    let category:QuizData.Category
+    let difficulty : QuizData.Difficulty
 
     var results: [QuizResult]
     
     @Binding var toQuizSectionView : Bool
     
     @Binding var saveSuccessToastMessage : Bool
+    
+  
+    
     var correctCount: Int {
         self.results
             .filter { $0.isCorrect == true }
@@ -38,6 +44,10 @@ struct ResultView: View {
         }
         .navigationTitle("결과")
         .navigationBarBackButtonHidden(true)
+        .onAppear{
+            print(category)
+            print(difficulty)
+        }
     }
     
     private func saveResult() {
@@ -98,7 +108,7 @@ extension ResultView {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: ResultSuite.self, configurations: config)
     
-    ResultView(results: [
+    ResultView(category:.animals ,difficulty:.easy ,results: [
         QuizResult(image: "사자", answer: "사자", correctAnswer: "사자", isCorrect: true),
         QuizResult(image: "호랑이", answer: "여우", correctAnswer: "호랑이", isCorrect: false)
     ], toQuizSectionView: .constant(true), saveSuccessToastMessage: .constant(false))
