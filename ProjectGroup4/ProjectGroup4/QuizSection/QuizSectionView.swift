@@ -21,10 +21,60 @@ struct QuizSectionView: View {
     @State private var toResultView: Bool = false
     @Binding var toQuizSectionView : Bool
     @Binding var saveSuccessToastMessage : Bool
+    @State private var timeRemaining = 10.0
+    @State private var timer: Timer?
     
     var body: some View {
         
         VStack{
+            HStack(spacing: 20) {
+             
+                ZStack {
+                    Circle()
+                        .stroke(Color.black, lineWidth: 2)
+                        .frame(width: 50, height: 50)
+                    
+                    Text("\(Int(timeRemaining))")
+                        .font(.title)
+                        .fontWeight(.bold)
+                }
+                
+              
+                ZStack(alignment: .leading) {
+                    Rectangle()
+                        .frame(width: 200, height: 20)
+                        .foregroundColor(Color.gray.opacity(0.3))
+                    
+                    Rectangle()
+                        .frame(width: max(0, 200 * (timeRemaining / 10.0)), height: 20)
+                        .foregroundColor(Color.blue)
+                }
+                .cornerRadius(10)
+            }
+            .onAppear {
+                startTimer()
+            }
+            .onDisappear {
+                timer?.invalidate()
+            }
+            .onChange(of:timeRemaining){
+                if(timeRemaining == 0){
+                   if( currentIndex == quizContent.count - 1) {
+                       compareAnswer()
+                       updateQuizResult()
+                       toResultView = true
+            
+                    }
+                    else{
+                        compareAnswer()
+                        updateQuizResult()
+                        currentIndex += 1
+                        timeRemaining = 10.0
+                        startTimer()
+                    }
+                }
+            }
+            
             Text(answerHint)
             
             Image(currentImage)
@@ -45,6 +95,8 @@ struct QuizSectionView: View {
                     compareAnswer()
                     updateQuizResult()
                     currentIndex += 1
+                    timeRemaining = 10.0
+                    startTimer()
                 }
             } label: {
                 if currentIndex == quizContent.count - 1 {
@@ -88,6 +140,18 @@ struct QuizSectionView: View {
         let user = userInput.trimmingCharacters(in: .whitespacesAndNewlines)
         self.isCorrect = user.caseInsensitiveCompare(currentAnswer) == .orderedSame
     }
+    
+    private func startTimer() {
+        timer?.invalidate()
+         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+             if timeRemaining > 0 {
+                 timeRemaining -= 0.1
+             } else {
+                 timer?.invalidate()
+                 timeRemaining = 0
+             }
+         }
+     }
     
 }
 
