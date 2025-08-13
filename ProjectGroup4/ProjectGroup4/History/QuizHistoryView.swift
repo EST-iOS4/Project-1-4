@@ -16,7 +16,7 @@ struct QuizHistoryView: View {
     
     // MARK: body
     var body: some View {
-        NavigationStack {
+  
             VStack {
                 // 저장된 결과가 없을 때 안내 메시지 표시
                 if resultSuites.isEmpty {
@@ -31,7 +31,7 @@ struct QuizHistoryView: View {
                 }
             }
             .navigationTitle("퀴즈 결과")
-        }
+        
     }
 }
 
