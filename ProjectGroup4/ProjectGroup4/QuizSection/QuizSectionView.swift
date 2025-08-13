@@ -56,7 +56,7 @@ struct QuizSectionView: View {
                 
             }
         }
-        .navigationDestination(isPresented: $toResultView, destination: {ResultView(results: quizResult, toQuizSectionView: $toQuizSectionView, saveSuccessToastMessage: $saveSuccessToastMessage)})
+        .navigationDestination(isPresented: $toResultView, destination: {ResultView(category: category, difficulty: difficulty,results: quizResult, toQuizSectionView: $toQuizSectionView, saveSuccessToastMessage: $saveSuccessToastMessage)})
         
         .onAppear{
             quizContent = QuizData.getData(category: category, difficulty: difficulty)
