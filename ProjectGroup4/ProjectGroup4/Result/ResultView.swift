@@ -73,7 +73,11 @@ extension ResultView {
         Button {
             print("SwiftData로 저장")
             
-            let newSuite = ResultSuite(results: results, created: Date())
+            let newSuite = ResultSuite(results: results,
+                                       created: Date(),
+                                       category: .init(
+                                        quiz: category, level: difficulty)
+            )
             modelContext.insert(newSuite)
             isSaved = true
             

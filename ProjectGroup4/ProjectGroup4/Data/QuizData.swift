@@ -129,7 +129,7 @@ struct QuizData {
     ]
     
 
-    enum Category: CaseIterable {
+    enum Category: CaseIterable, Codable {
         case animals, celebrities, brands
         
         var name: String {
@@ -141,7 +141,7 @@ struct QuizData {
         }
     }
     
-    enum Difficulty: CaseIterable {
+    enum Difficulty: CaseIterable, Codable {
         case easy, medium, hard
         
         var name: String {

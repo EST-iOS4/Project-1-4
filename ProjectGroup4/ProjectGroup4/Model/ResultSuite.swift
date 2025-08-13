@@ -16,9 +16,17 @@ final class ResultSuite {
     var results: [QuizResult]
     var created: Date
     
-    init(id: UUID = UUID(), results: [QuizResult], created: Date = .now) {
+    var category: SuiteCategory
+    
+    init(id: UUID = UUID(), results: [QuizResult], created: Date = .now, category: SuiteCategory) {
         self.id = id
         self.results = results
         self.created = created
+        self.category = category
+    }
+    
+    struct SuiteCategory: Codable {
+        let quiz: QuizData.Category
+        let level: QuizData.Difficulty
     }
 }
