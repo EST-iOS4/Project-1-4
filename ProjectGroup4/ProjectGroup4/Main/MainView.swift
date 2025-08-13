@@ -29,18 +29,28 @@ struct MainView: View {
             else {
                 ZStack{
                     VStack(spacing: 50) {
-                        Button{
-                            showQuizSetting = true
-                        } label:{
-                            Text("퀴즈 시작")
-                        }
                         
-                        Button{
-                            toQuizHistoryView = true
-                        } label:{
-                            Text("지난 결과")
+                        PrimaryButton(title: "✨퀴즈 시작") {
+                            showQuizSetting = true
                         }
+                        .padding(.horizontal)
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.green)
+                        .cornerRadius(12)
+                        
+                        
+                        PrimaryButton(title: "✨지난 결과") {
+                            showQuizSetting = true
+                        }
+                        .padding(.horizontal)
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.green)
+                        .cornerRadius(12)
                     }
+                    
+                    
                     if(saveSuccessToastMessage){
                         ToastMessage(message: "저장 완료되었습니다")
                     }
