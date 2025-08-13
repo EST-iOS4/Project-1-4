@@ -25,7 +25,7 @@ final class ResultSuite {
         self.category = category
     }
     
-    struct SuiteCategory {
+    struct SuiteCategory: Codable {
         let quiz: QuizData.Category
         let level: QuizData.Difficulty
     }
