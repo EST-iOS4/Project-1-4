@@ -11,6 +11,7 @@ struct MainView: View {
     @State private var toMainView: Bool = false
     @State private var showQuizSetting: Bool = false
     @State var toQuizSectionView : Bool = false
+    @State var toQuizHistoryView : Bool = false
     @State var category : QuizData.Category = .animals
     @State var difficulty : QuizData.Difficulty = .easy
     @State var saveSuccessToastMessage : Bool = false
@@ -35,7 +36,7 @@ struct MainView: View {
                         }
                         
                         Button{
-                            
+                            toQuizHistoryView = true
                         } label:{
                             Text("지난 결과")
                         }
@@ -48,6 +49,7 @@ struct MainView: View {
                     QuizSettingView(selectedCategory: $category, selectedDifficulty: $difficulty,toQuizSectionView: $toQuizSectionView)
                 }
                 .navigationDestination(isPresented: $toQuizSectionView, destination: {QuizSectionView(category: category, difficulty: difficulty,toQuizSectionView: $toQuizSectionView, saveSuccessToastMessage: $saveSuccessToastMessage)})
+                .navigationDestination(isPresented:$toQuizHistoryView , destination: {QuizHistoryView()})
                 .onChange(of:toQuizSectionView){
                     print(toQuizSectionView)
                 }
@@ -59,5 +61,3 @@ struct MainView: View {
     MainView()
 }
 
-//버튼 2개 만들기
-//퀴즈 시작 버튼, 지난 결과 버튼
