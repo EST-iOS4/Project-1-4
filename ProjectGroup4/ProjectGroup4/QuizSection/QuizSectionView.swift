@@ -137,12 +137,12 @@ struct QuizSectionView: View {
         userInput = ""
     }
     
-    private func updateQuizResult(){
+    private func updateQuizResult() {
         let result = QuizResult(image: currentImage, answer: userInput, correctAnswer: currentAnswer, isCorrect: isCorrect)
         quizResult.append(result)
     }
     
-    private func compareAnswer(){
+    private func compareAnswer() {
         let user = userInput.trimmingCharacters(in: .whitespacesAndNewlines)
         self.isCorrect = user.caseInsensitiveCompare(currentAnswer) == .orderedSame
     }
