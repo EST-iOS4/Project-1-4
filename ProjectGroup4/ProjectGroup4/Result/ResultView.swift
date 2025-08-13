@@ -60,6 +60,7 @@ struct ResultView: View {
 extension ResultView {
     var CorrectCountLabel: some View {
         Text("맞춘 개수: \(correctCount)/\(results.count)")
+            .font(.title2)
     }
     
     var ResultItemList: some View {
