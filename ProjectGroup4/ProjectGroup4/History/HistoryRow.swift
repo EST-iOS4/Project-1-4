@@ -81,14 +81,14 @@ struct HistoryRow: View {
             Spacer()
             
          
-            VStack(alignment: .trailing, spacing: 8) {
-                Text(suite.created, style: .date)
-                    .font(.caption)
-                    .foregroundColor(.primary.opacity(0.6))
-                
-                Text(suite.created, style: .time)
-                    .font(.caption)
-                    .foregroundColor(.primary.opacity(0.6))
+            ZStack(alignment: .trailing) {
+                VStack {
+                    Text(suite.formattedCreadted)
+                        .font(.caption)
+                        .foregroundColor(.primary.opacity(0.6))
+                    
+                    Spacer()
+                }
                 
                 Image(systemName: "chevron.right")
                     .font(.caption)
