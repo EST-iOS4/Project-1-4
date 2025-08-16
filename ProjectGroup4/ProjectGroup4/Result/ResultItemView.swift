@@ -9,59 +9,73 @@ import SwiftUI
 
 // MARK: View
 struct ResultItemView: View {
-    // MARK: state
     let result: QuizResult
-
     
-    // MARK: body
     var body: some View {
-        HStack {
-            QuizImage
+        HStack(spacing: 15) {
+           
+         
+            Image(result.image)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 50, height: 50)
+                .background(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.white.opacity(0.3), lineWidth: 2)
+                )
+                .shadow(color: .black.opacity(0.3), radius: 15, x: 0, y: 8)
+                
+            
+            VStack(alignment: .leading, spacing: 5) {
 
-            Answers
-
+                
+                HStack {
+                    Text("정답:")
+                        .font(.caption)
+                        .foregroundColor(.primary.opacity(0.7))
+                    
+                    Text(result.correctAnswer)
+                        .font(.body)
+                        .fontWeight(.medium)
+                }
+                
+               
+                    HStack {
+                        Text("입력:")
+                            .font(.caption)
+                            .foregroundColor(.primary.opacity(0.7))
+                     
+                            Text(result.answer.isEmpty ? "무응답" : result.answer)
+                                .font(.body)
+                                .fontWeight(.medium)
+                                .foregroundStyle(result.isCorrect ? .green : .red)
+                        
+                     
+                    }
+                
+            }
             Spacer()
-
-            ResultIcon
+            Image(systemName: result.isCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
+                .font(.title2)
+                .foregroundColor(result.isCorrect ? .green : .red)
+         
         }
-        .padding()
+        .padding(.horizontal, 20)
+        .padding(.vertical, 15)
+        .background(
+            RoundedRectangle(cornerRadius: 15)
+                .fill(Color.white.opacity(0.9))
+                .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 2)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 15)
+                .stroke(result.isCorrect ? Color.green.opacity(0.3) : Color.red.opacity(0.3), lineWidth: 1)
+        )
     }
 }
 
-
-// MARK: Components
-extension ResultItemView {
-    var QuizImage: some View {
-        Image(result.image)
-            .resizable()
-            .scaledToFit()
-            .frame(width: 80, height: 80)
-            .cornerRadius(8)
-            .padding(.trailing, 10)
-    }
-    
-    var Answers: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            Text("제출 답안: \(result.answer)")
-                .font(.headline)
-            Text("정답: \(result.correctAnswer)")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-        }
-    }
-    
-    var ResultIcon: some View {
-        if result.isCorrect {
-            Image(systemName: "checkmark.circle.fill")
-                .foregroundColor(.green)
-                .font(.title)
-        } else {
-            Image(systemName: "xmark.circle.fill")
-                .foregroundColor(.red)
-                .font(.title)
-        }
-    }
-}
 
 
 

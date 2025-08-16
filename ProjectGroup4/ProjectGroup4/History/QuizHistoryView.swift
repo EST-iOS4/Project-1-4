@@ -10,32 +10,105 @@ import SwiftData
 
 // MARK: View
 struct QuizHistoryView: View {
-    // MARK: state
+   
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \ResultSuite.created, order: .reverse) private var resultSuites: [ResultSuite]
     
     // MARK: body
     var body: some View {
         NavigationStack {
-            VStack {
-                // 저장된 결과가 없을 때 안내 메시지 표시
-                if resultSuites.isEmpty {
-                    ContentUnavailableView("저장된 결과가 없습니다", systemImage: "doc.text.magnifyingglass")
-                } else {
-                    // 저장된 결과 목록 표시
-                    List {
-                        ForEach(resultSuites) { suite in
-                            NavigationLink {
-                                HistoryList(suite: suite)
-                            } label: {
-                                HistoryRow(suite: suite)
+            GeometryReader { geometry in
+                ZStack {
+               
+                    LinearGradient(
+                        gradient: Gradient(colors: [
+                            Color.purple.opacity(0.8),
+                            Color.blue.opacity(0.6),
+                            Color.cyan.opacity(0.4)
+                        ]),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                    .ignoresSafeArea()
+                    
+                    Circle()
+                        .fill(Color.white.opacity(0.08))
+                        .frame(width: 180, height: 180)
+                        .offset(x: -80, y: -150)
+                    
+                    Circle()
+                        .fill(Color.white.opacity(0.05))
+                        .frame(width: 120, height: 120)
+                        .offset(x: 100, y: 200)
+                    
+                    VStack(spacing: 0) {
+                        // 헤더 섹션
+                        VStack(spacing: 15) {
+                            Text("📊")
+                                .font(.system(size: 60))
+                                .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
+                            
+                            Text("퀴즈 기록")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
+                            
+                            Text("지난 퀴즈 결과를 확인하세요")
+                                .font(.body)
+                                .foregroundColor(.white.opacity(0.8))
+                        }
+                        .padding(.top, 30)
+                        .padding(.bottom, 20)
+                        
+                      
+                        if resultSuites.isEmpty {
+                         
+                            VStack(spacing: 25) {
+                                Spacer()
+                                
+                                VStack(spacing: 20) {
+                                    Image(systemName: "doc.text.magnifyingglass")
+                                        .font(.system(size: 80))
+                                        .foregroundColor(.white.opacity(0.6))
+                                        .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
+                                    
+                                    Text("저장된 결과가 없습니다")
+                                        .font(.title2)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.white)
+                                    
+                                    Text("퀴즈를 완료하고 결과를 저장해보세요!")
+                                        .font(.body)
+                                        .foregroundColor(.white.opacity(0.8))
+                                        .multilineTextAlignment(.center)
+                                }
+                                .padding(.horizontal, 40)
+                                
+                                Spacer()
+                            }
+                        } else {
+                           
+                            ScrollView {
+                                LazyVStack(spacing: 15) {
+                                    ForEach(resultSuites) { suite in
+                                        NavigationLink {
+                                            HistoryList(suite: suite)
+                                        } label: {
+                                            HistoryRow(suite: suite)
+                                        }
+                                        .buttonStyle(PlainButtonStyle())
+                                    }
+                                }
+                                .padding(.horizontal, 25)
+                                .padding(.vertical, 10)
                             }
                         }
-                        .onDelete(perform: deleteResult)
                     }
                 }
             }
-            .navigationTitle("퀴즈 결과")
+            .navigationTitle("")
+          
         }
     }
     
@@ -46,11 +119,6 @@ struct QuizHistoryView: View {
         }
     }
 }
-
-
-
-
-
 // MARK: Preview
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
@@ -68,7 +136,7 @@ struct QuizHistoryView: View {
     let sampleSuite2 = ResultSuite(
         results: [
             QuizResult(image: "구글", answer: "구글", correctAnswer: "구글", isCorrect: true),
-            QuizResult(image: "애플", answer: "삼성", correctAnswer: "���플", isCorrect: false)
+            QuizResult(image: "애플", answer: "삼성", correctAnswer: "플", isCorrect: false)
         ],
         created: .now.addingTimeInterval(-86400),
         category: .init(quiz: .brands, level: .hard)
