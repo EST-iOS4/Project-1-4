@@ -15,6 +15,14 @@ final class ResultSuite {
     
     var results: [QuizResult]
     var created: Date
+    var formattedCreadted: String {
+        return created.formatted(
+            .dateTime
+                .year().month().day()
+                .locale(Locale(identifier: "ko_KR"))
+        )
+
+    }
     
     var category: SuiteCategory
     
