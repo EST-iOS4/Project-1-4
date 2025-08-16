@@ -80,7 +80,7 @@ struct HistoryRow: View {
             
             Spacer()
             
-            // 오른쪽 날짜 및 화살표
+         
             VStack(alignment: .trailing, spacing: 8) {
                 Text(suite.created, style: .date)
                     .font(.caption)

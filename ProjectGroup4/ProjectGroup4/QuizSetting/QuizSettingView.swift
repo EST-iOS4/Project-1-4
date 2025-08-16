@@ -10,7 +10,7 @@ struct QuizSettingView: View {
         NavigationView {
             GeometryReader { geometry in
                 ZStack {
-                    // 그라데이션 배경
+               
                     LinearGradient(
                         gradient: Gradient(colors: [
                             Color.purple.opacity(0.8),
@@ -22,7 +22,7 @@ struct QuizSettingView: View {
                     )
                     .ignoresSafeArea()
                     
-                    // 배경 장식 원들
+                 
                     Circle()
                         .fill(Color.white.opacity(0.08))
                         .frame(width: 180, height: 180)
@@ -35,7 +35,7 @@ struct QuizSettingView: View {
                     
                     ScrollView {
                         VStack(spacing: 35) {
-                            // 헤더 섹션
+                     
                             VStack(spacing: 15) {
                                 
                                 Text("퀴즈 시작")
@@ -70,7 +70,7 @@ struct QuizSettingView: View {
                                             selectedCategory = category
                                         }) {
                                             HStack(spacing: 15) {
-                                                // 카테고리별 아이콘 (예시)
+                                               
                                                 Image(systemName: getCategoryIcon(category))
                                                     .font(.title3)
                                                     .foregroundColor(selectedCategory == category ? .white : .primary)
@@ -129,7 +129,7 @@ struct QuizSettingView: View {
                                 .padding(.horizontal, 25)
                             }
                             
-                            // 난이도 선택 섹션
+                       
                             VStack(alignment: .leading, spacing: 20) {
                                 HStack {
                                     Image(systemName: "chart.bar.fill")
@@ -149,7 +149,7 @@ struct QuizSettingView: View {
                                             selectedDifficulty = difficulty
                                         }) {
                                             HStack(spacing: 15) {
-                                                // 난이도별 아이콘
+                                            
                                                 Image(systemName: getDifficultyIcon(difficulty))
                                                     .font(.title3)
                                                     .foregroundColor(selectedDifficulty == difficulty ? .white : .primary)
@@ -208,7 +208,7 @@ struct QuizSettingView: View {
                                 .padding(.horizontal, 25)
                             }
                             
-                            // 시작 버튼
+                         
                             Button(action: {
                                 toQuizSectionView = true
                                 dismiss()
@@ -263,10 +263,9 @@ struct QuizSettingView: View {
         }
     }
     
-    // 카테고리별 아이콘 반환 함수
+   
     private func getCategoryIcon(_ category: QuizData.Category) -> String {
-        // QuizData.Category의 실제 케이스에 따라 적절한 아이콘 반환
-        // 예시로 기본 아이콘들을 사용
+      
         switch category {
         case .animals:
             return "pawprint.fill"
@@ -275,7 +274,7 @@ struct QuizSettingView: View {
         }
     }
     
-    // 난이도별 아이콘 반환 함수
+   
     private func getDifficultyIcon(_ difficulty: QuizData.Difficulty) -> String {
         switch difficulty {
         case .easy:

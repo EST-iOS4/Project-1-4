@@ -12,7 +12,7 @@ struct MainView: View {
         NavigationStack {
             GeometryReader { geometry in
                 ZStack {
-                    // 그라데이션 배경
+                
                     LinearGradient(
                         gradient: Gradient(colors: [
                             Color.purple.opacity(0.8),
@@ -24,7 +24,7 @@ struct MainView: View {
                     )
                     .ignoresSafeArea()
                     
-                    // 배경 장식 원들
+                   
                     Circle()
                         .fill(Color.white.opacity(0.1))
                         .frame(width: 200, height: 200)
@@ -36,7 +36,7 @@ struct MainView: View {
                         .offset(x: 120, y: 250)
                     
                     VStack(spacing: 0) {
-                        // 헤더 섹션
+                   
                         VStack(spacing: 20) {
                           
                             Text("퀴즈 마스터")
@@ -53,9 +53,9 @@ struct MainView: View {
                         
                         Spacer()
                         
-                        // 버튼 섹션
+                 
                         VStack(spacing: 25) {
-                            // 퀴즈 시작 버튼
+                          
                             Button(action: {
                                 showQuizSetting = true
                             }) {
@@ -99,7 +99,7 @@ struct MainView: View {
                             .scaleEffect(1.0)
                             .animation(.spring(response: 0.3, dampingFraction: 0.6), value: showQuizSetting)
                             
-                            // 지난 결과 버튼
+                       
                             Button(action: {
                                 toQuizHistoryView = true
                             }) {
@@ -151,7 +151,7 @@ struct MainView: View {
                      
                     }
                     
-                    // 토스트 메시지
+             
                     if saveSuccessToastMessage {
                         VStack {
                             Spacer()
