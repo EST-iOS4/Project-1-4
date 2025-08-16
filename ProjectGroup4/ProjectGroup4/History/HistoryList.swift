@@ -14,7 +14,7 @@ struct HistoryList: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                // 그라데이션 배경
+            
                 LinearGradient(
                     gradient: Gradient(colors: [
                         Color.purple.opacity(0.8),
@@ -26,7 +26,7 @@ struct HistoryList: View {
                 )
                 .ignoresSafeArea()
                 
-                // 배경 장식 원들
+         
                 Circle()
                     .fill(Color.white.opacity(0.08))
                     .frame(width: 160, height: 160)
@@ -38,7 +38,7 @@ struct HistoryList: View {
                     .offset(x: 90, y: 180)
                 
                 VStack(spacing: 25) {
-                    // 헤더
+                
                     VStack(spacing: 15) {
                         Text("📝")
                             .font(.system(size: 50))
@@ -50,7 +50,7 @@ struct HistoryList: View {
                             .foregroundColor(.white)
                             .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
                         
-                        // 퀴즈 정보
+                    
                         HStack(spacing: 20) {
                             VStack {
                                 Text(suite.category.quiz.name)
@@ -86,7 +86,7 @@ struct HistoryList: View {
                     }
                     .padding(.top, 20)
                     
-                    // 결과 리스트
+              
                     ScrollView {
                         LazyVStack(spacing: 12) {
                             ForEach(suite.results) { result in

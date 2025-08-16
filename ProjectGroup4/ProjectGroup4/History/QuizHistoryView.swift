@@ -42,7 +42,7 @@ struct QuizHistoryView: View {
                         .offset(x: 100, y: 200)
                     
                     VStack(spacing: 0) {
-                        // 헤더 섹션
+                      
                         VStack(spacing: 15) {
                             Text("📊")
                                 .font(.system(size: 60))

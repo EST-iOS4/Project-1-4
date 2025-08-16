@@ -52,9 +52,9 @@ struct QuizSectionView: View {
                 
                 ScrollView {
                     VStack(spacing: 30) {
-                        // 헤더 및 타이머 섹션
+                       
                         VStack(spacing: 20) {
-                            // 퀴즈 정보
+                         
                             HStack(spacing: 15) {
                                 Image(systemName: "brain.head.profile")
                                     .font(.title2)
