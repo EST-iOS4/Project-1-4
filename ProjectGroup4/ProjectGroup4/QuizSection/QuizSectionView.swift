@@ -75,6 +75,56 @@ struct QuizSectionView: View {
                         .padding(.top, 10)
                         
                         Spacer()
+                        HStack(spacing: 20) {
+                           
+                            
+                   
+                            VStack(spacing: 8) {
+                        
+                                    Text("남은 시간")
+                                        .font(.caption)
+                                        .foregroundColor(.white.opacity(0.8))
+                               
+                             
+                                ZStack(alignment: .leading) {
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .frame(width: 200, height: 25)
+                                        .foregroundColor(Color.white.opacity(0.2))
+                                    
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .frame(width: max(0, 200 * (timeRemaining / 10.0)), height: 25)
+                                        .foregroundColor(
+                                            timeRemaining > 5 ? Color.green : (timeRemaining > 2 ? Color.orange : Color.red)
+                                        )
+                                        .animation(.linear(duration: 0.1), value: timeRemaining)
+                                }
+                                .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
+                            }
+                            
+                            ZStack {
+                                Circle()
+                                    .stroke(Color.white.opacity(0.3), lineWidth: 6)
+                                    .frame(width: 50, height: 50)
+                                
+                                Circle()
+                                    .trim(from: 0, to: timeRemaining / 10.0)
+                                    .stroke(
+                                        timeRemaining > 5 ? Color.green : (timeRemaining > 2 ? Color.orange : Color.red),
+                                        style: StrokeStyle(lineWidth: 6, lineCap: .round)
+                                    )
+                                    .frame(width: 50, height: 50)
+                                    .rotationEffect(.degrees(-90))
+                                    .animation(.linear(duration: 0.1), value: timeRemaining)
+                                
+                                Text("\(Int(timeRemaining))")
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                            }
+                            .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+
+                        }
+                        Spacer()
                     }
                     
                     ScrollView {
@@ -108,52 +158,52 @@ struct QuizSectionView: View {
                                 .padding(.horizontal, 25)
                                 
                            
-                                HStack(spacing: 20) {
-                                   
-                                    ZStack {
-                                        Circle()
-                                            .stroke(Color.white.opacity(0.3), lineWidth: 6)
-                                            .frame(width: 70, height: 70)
-                                        
-                                        Circle()
-                                            .trim(from: 0, to: timeRemaining / 10.0)
-                                            .stroke(
-                                                timeRemaining > 5 ? Color.green : (timeRemaining > 2 ? Color.orange : Color.red),
-                                                style: StrokeStyle(lineWidth: 6, lineCap: .round)
-                                            )
-                                            .frame(width: 70, height: 70)
-                                            .rotationEffect(.degrees(-90))
-                                            .animation(.linear(duration: 0.1), value: timeRemaining)
-                                        
-                                        Text("\(Int(timeRemaining))")
-                                            .font(.title2)
-                                            .fontWeight(.bold)
-                                            .foregroundColor(.white)
-                                    }
-                                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
-                                    
-                           
-                                    VStack(spacing: 8) {
-                                        Text("남은 시간")
-                                            .font(.caption)
-                                            .foregroundColor(.white.opacity(0.8))
-                                        
-                                        ZStack(alignment: .leading) {
-                                            RoundedRectangle(cornerRadius: 15)
-                                                .frame(width: 200, height: 25)
-                                                .foregroundColor(Color.white.opacity(0.2))
-                                            
-                                            RoundedRectangle(cornerRadius: 15)
-                                                .frame(width: max(0, 200 * (timeRemaining / 10.0)), height: 25)
-                                                .foregroundColor(
-                                                    timeRemaining > 5 ? Color.green : (timeRemaining > 2 ? Color.orange : Color.red)
-                                                )
-                                                .animation(.linear(duration: 0.1), value: timeRemaining)
-                                        }
-                                        .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
-                                    }
-                                }
-                                .padding(.horizontal, 25)
+//                                HStack(spacing: 20) {
+//                                   
+//                                    ZStack {
+//                                        Circle()
+//                                            .stroke(Color.white.opacity(0.3), lineWidth: 6)
+//                                            .frame(width: 70, height: 70)
+//                                        
+//                                        Circle()
+//                                            .trim(from: 0, to: timeRemaining / 10.0)
+//                                            .stroke(
+//                                                timeRemaining > 5 ? Color.green : (timeRemaining > 2 ? Color.orange : Color.red),
+//                                                style: StrokeStyle(lineWidth: 6, lineCap: .round)
+//                                            )
+//                                            .frame(width: 70, height: 70)
+//                                            .rotationEffect(.degrees(-90))
+//                                            .animation(.linear(duration: 0.1), value: timeRemaining)
+//                                        
+//                                        Text("\(Int(timeRemaining))")
+//                                            .font(.title2)
+//                                            .fontWeight(.bold)
+//                                            .foregroundColor(.white)
+//                                    }
+//                                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+//                                    
+//                           
+//                                    VStack(spacing: 8) {
+//                                        Text("남은 시간")
+//                                            .font(.caption)
+//                                            .foregroundColor(.white.opacity(0.8))
+//                                        
+//                                        ZStack(alignment: .leading) {
+//                                            RoundedRectangle(cornerRadius: 15)
+//                                                .frame(width: 200, height: 25)
+//                                                .foregroundColor(Color.white.opacity(0.2))
+//                                            
+//                                            RoundedRectangle(cornerRadius: 15)
+//                                                .frame(width: max(0, 200 * (timeRemaining / 10.0)), height: 25)
+//                                                .foregroundColor(
+//                                                    timeRemaining > 5 ? Color.green : (timeRemaining > 2 ? Color.orange : Color.red)
+//                                                )
+//                                                .animation(.linear(duration: 0.1), value: timeRemaining)
+//                                        }
+//                                        .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
+//                                    }
+//                                }
+//                                .padding(.horizontal, 25)
                             }
                             .padding(.top, 20)
                             
@@ -190,16 +240,7 @@ struct QuizSectionView: View {
                             
                          
                             VStack(spacing: 15) {
-                                HStack {
-                                    Image(systemName: "photo.fill")
-                                        .font(.title3)
-                                        .foregroundColor(.white)
-                                    
-                                    Text("문제 이미지")
-                                        .font(.headline)
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(.white)
-                                }
+                         
                                 
                                 Image(currentImage)
                                     .resizable()
