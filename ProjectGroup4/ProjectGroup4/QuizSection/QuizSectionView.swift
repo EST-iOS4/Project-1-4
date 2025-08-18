@@ -178,7 +178,7 @@ struct QuizSectionView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: min(geometry.size.width - 50, 320), height: min(geometry.size.width - 50, 320))
-                                .background(Color.black)
+                                .background(Color.white)
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 20)
