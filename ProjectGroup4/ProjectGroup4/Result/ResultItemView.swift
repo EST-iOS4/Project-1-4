@@ -19,7 +19,7 @@ struct ResultItemView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 50, height: 50)
-                .background(.black)
+                .background(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
