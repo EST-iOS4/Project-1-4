@@ -177,7 +177,7 @@ struct QuizSectionView: View {
                             Image(currentImage)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: min(geometry.size.width - 50, 320), height: min(geometry.size.width - 50, 320))
+//                                .frame(width: min(geometry.size.width - 50, 320), height: min(geometry.size.width - 50, 320))
                                 .background(Color.white)
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                                 .overlay(
@@ -214,22 +214,16 @@ struct QuizSectionView: View {
                                     RoundedRectangle(cornerRadius: 15)
                                         .stroke(Color.blue.opacity(0.3), lineWidth: 2)
                                 )
+                                .submitLabel(.done)
+                                .onSubmit {
+                                    handleSubmit()
+                                }
                         }
                         .padding(.horizontal, 25)
                         
                    
                         Button(action: {
-                            if currentIndex == quizContent.count - 1 {
-                                compareAnswer()
-                                updateQuizResult()
-                                toResultView = true
-                            } else {
-                                compareAnswer()
-                                updateQuizResult()
-                                currentIndex += 1
-                                timeRemaining = 10.0
-                                startTimer()
-                            }
+                            handleSubmit()
                         }) {
                             HStack(spacing: 15) {
                                 Image(systemName: currentIndex == quizContent.count - 1 ? "checkmark.circle.fill" : "arrow.right.circle.fill")
@@ -285,17 +279,7 @@ struct QuizSectionView: View {
         }
         .onChange(of: timeRemaining) {
             if timeRemaining == 0 {
-                if currentIndex == quizContent.count - 1 {
-                    compareAnswer()
-                    updateQuizResult()
-                    toResultView = true
-                } else {
-                    compareAnswer()
-                    updateQuizResult()
-                    currentIndex += 1
-                    timeRemaining = 10.0
-                    startTimer()
-                }
+                handleSubmit()
             }
         }
         .navigationDestination(isPresented: $toResultView, destination: {
@@ -312,6 +296,20 @@ struct QuizSectionView: View {
         }
         .navigationBarBackButtonHidden(true)
     }
+    
+    private func handleSubmit() {
+         if currentIndex == quizContent.count - 1 {
+             compareAnswer()
+             updateQuizResult()
+             toResultView = true
+         } else {
+             compareAnswer()
+             updateQuizResult()
+             currentIndex += 1
+             timeRemaining = 10.0
+             startTimer()
+         }
+     }
     
     
     private func updateQuizData() {
