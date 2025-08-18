@@ -24,6 +24,7 @@ struct QuizSectionView: View {
     @State private var timeRemaining = 10.0
     @State private var timer: Timer?
     @State private var isKeyboardVisible : Bool = false
+    @State private var showExitAlert = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -51,231 +52,265 @@ struct QuizSectionView: View {
                     .frame(width: 100, height: 100)
                     .offset(x: 90, y: 180)
                 
-                ScrollView {
-                    VStack(spacing: 30) {
-                       
-                        VStack(spacing: 20) {
-                         
-                            HStack(spacing: 15) {
-                                Image(systemName: "brain.head.profile")
-                                    .font(.title2)
-                                    .foregroundColor(.white)
-                                
-                                Text("퀴즈 진행 중")
-                                    .font(.title2)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.white)
-                                
-                                Spacer()
-                                
-                                Text("\(currentIndex + 1)/\(quizContent.count)")
-                                    .font(.headline)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.white.opacity(0.9))
-                                    .padding(.horizontal, 15)
-                                    .padding(.vertical, 8)
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 20)
-                                            .fill(Color.white.opacity(0.2))
-                                    )
-                            }
-                            .padding(.horizontal, 25)
-                            
-                       
-                            HStack(spacing: 20) {
-                               
-                                ZStack {
+                VStack {
+                    
+                    HStack {
+                        Button(action: {
+                            showExitAlert = true
+                        }) {
+                            Image(systemName: "arrow.left")
+                                .font(.title2)
+                                .foregroundColor(.white)
+                                .padding(12)
+                                .background(
                                     Circle()
-                                        .stroke(Color.white.opacity(0.3), lineWidth: 6)
-                                        .frame(width: 70, height: 70)
-                                    
+                                        .fill(Color.white.opacity(0.2))
+                                )
+                                .overlay(
                                     Circle()
-                                        .trim(from: 0, to: timeRemaining / 10.0)
-                                        .stroke(
-                                            timeRemaining > 5 ? Color.green : (timeRemaining > 2 ? Color.orange : Color.red),
-                                            style: StrokeStyle(lineWidth: 6, lineCap: .round)
-                                        )
-                                        .frame(width: 70, height: 70)
-                                        .rotationEffect(.degrees(-90))
-                                        .animation(.linear(duration: 0.1), value: timeRemaining)
+                                        .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                                )
+                        }
+                        .padding(.leading, 20)
+                        .padding(.top, 10)
+                        
+                        Spacer()
+                    }
+                    
+                    ScrollView {
+                        VStack(spacing: 30) {
+                           
+                            VStack(spacing: 20) {
+                             
+                                HStack(spacing: 15) {
+                                    Image(systemName: "brain.head.profile")
+                                        .font(.title2)
+                                        .foregroundColor(.white)
                                     
-                                    Text("\(Int(timeRemaining))")
+                                    Text("퀴즈 진행 중")
                                         .font(.title2)
                                         .fontWeight(.bold)
                                         .foregroundColor(.white)
-                                }
-                                .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
-                                
-                       
-                                VStack(spacing: 8) {
-                                    Text("남은 시간")
-                                        .font(.caption)
-                                        .foregroundColor(.white.opacity(0.8))
                                     
-                                    ZStack(alignment: .leading) {
-                                        RoundedRectangle(cornerRadius: 15)
-                                            .frame(width: 200, height: 25)
-                                            .foregroundColor(Color.white.opacity(0.2))
-                                        
-                                        RoundedRectangle(cornerRadius: 15)
-                                            .frame(width: max(0, 200 * (timeRemaining / 10.0)), height: 25)
-                                            .foregroundColor(
-                                                timeRemaining > 5 ? Color.green : (timeRemaining > 2 ? Color.orange : Color.red)
-                                            )
-                                            .animation(.linear(duration: 0.1), value: timeRemaining)
-                                    }
-                                    .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
+                                    Spacer()
+                                    
+                                    Text("\(currentIndex + 1)/\(quizContent.count)")
+                                        .font(.headline)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.white.opacity(0.9))
+                                        .padding(.horizontal, 15)
+                                        .padding(.vertical, 8)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 20)
+                                                .fill(Color.white.opacity(0.2))
+                                        )
                                 }
-                            }
-                            .padding(.horizontal, 25)
-                        }
-                        .padding(.top, 20)
-                        
-                    
-                        VStack(spacing: 15) {
-                            HStack {
-                                Image(systemName: "lightbulb.fill")
-                                    .font(.title3)
-                                    .foregroundColor(.yellow.opacity(0.9))
+                                .padding(.horizontal, 25)
                                 
-                                Text("힌트")
-                                    .font(.headline)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.white)
+                           
+                                HStack(spacing: 20) {
+                                   
+                                    ZStack {
+                                        Circle()
+                                            .stroke(Color.white.opacity(0.3), lineWidth: 6)
+                                            .frame(width: 70, height: 70)
+                                        
+                                        Circle()
+                                            .trim(from: 0, to: timeRemaining / 10.0)
+                                            .stroke(
+                                                timeRemaining > 5 ? Color.green : (timeRemaining > 2 ? Color.orange : Color.red),
+                                                style: StrokeStyle(lineWidth: 6, lineCap: .round)
+                                            )
+                                            .frame(width: 70, height: 70)
+                                            .rotationEffect(.degrees(-90))
+                                            .animation(.linear(duration: 0.1), value: timeRemaining)
+                                        
+                                        Text("\(Int(timeRemaining))")
+                                            .font(.title2)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                    }
+                                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+                                    
+                           
+                                    VStack(spacing: 8) {
+                                        Text("남은 시간")
+                                            .font(.caption)
+                                            .foregroundColor(.white.opacity(0.8))
+                                        
+                                        ZStack(alignment: .leading) {
+                                            RoundedRectangle(cornerRadius: 15)
+                                                .frame(width: 200, height: 25)
+                                                .foregroundColor(Color.white.opacity(0.2))
+                                            
+                                            RoundedRectangle(cornerRadius: 15)
+                                                .frame(width: max(0, 200 * (timeRemaining / 10.0)), height: 25)
+                                                .foregroundColor(
+                                                    timeRemaining > 5 ? Color.green : (timeRemaining > 2 ? Color.orange : Color.red)
+                                                )
+                                                .animation(.linear(duration: 0.1), value: timeRemaining)
+                                        }
+                                        .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
+                                    }
+                                }
+                                .padding(.horizontal, 25)
                             }
+                            .padding(.top, 20)
                             
-                            Text(answerHint)
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 15)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 15)
-                                        .fill(Color.white.opacity(0.15))
-                                        .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 15)
-                                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
-                                )
-                        }
-                        .padding(.horizontal, 25)
                         
-                     
-                        VStack(spacing: 15) {
-                            HStack {
-                                Image(systemName: "photo.fill")
-                                    .font(.title3)
-                                    .foregroundColor(.white)
+                            VStack(spacing: 15) {
+                                HStack {
+                                    Image(systemName: "lightbulb.fill")
+                                        .font(.title3)
+                                        .foregroundColor(.yellow.opacity(0.9))
+                                    
+                                    Text("힌트")
+                                        .font(.headline)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.white)
+                                }
                                 
-                                Text("문제 이미지")
-                                    .font(.headline)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.white)
-                            }
-                            
-                            Image(currentImage)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(
-                                    width: isKeyboardVisible
-                                        ? min(geometry.size.width - 50, 320) * 0.4
-                                        : min(geometry.size.width - 50, 320),
-                                    height: isKeyboardVisible
-                                        ? min(geometry.size.width - 50, 320) * 0.4
-                                        : min(geometry.size.width - 50, 320)
-                                )
-                                .animation(.easeInOut(duration: 0.3), value: isKeyboardVisible)
-                                .background(Color.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .stroke(Color.white.opacity(0.3), lineWidth: 2)
-                                )
-                                .shadow(color: .black.opacity(0.3), radius: 15, x: 0, y: 8)
-                        }
-                        .padding(.horizontal, 25)
-                        
-                  
-                        VStack(spacing: 20) {
-                            HStack {
-                                Image(systemName: "pencil.circle.fill")
-                                    .font(.title3)
-                                    .foregroundColor(.white)
-                                
-                                Text("답안 입력")
-                                    .font(.headline)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.white)
-                            }
-                            
-                            TextField("정답을 입력하세요", text: $userInput)
-                                .font(.body)
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 18)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 15)
-                                        .fill(Color.white.opacity(0.9))
-                                        .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 15)
-                                        .stroke(Color.blue.opacity(0.3), lineWidth: 2)
-                                )
-                                .submitLabel(.done)
-                        }
-                        .padding(.horizontal, 25)
-                        
-                   
-                        Button(action: {
-                            handleSubmit()
-                        }) {
-                            HStack(spacing: 15) {
-                                Image(systemName: currentIndex == quizContent.count - 1 ? "checkmark.circle.fill" : "arrow.right.circle.fill")
-                                    .font(.title2)
-                                    .foregroundColor(.white)
-                                
-                                Text(currentIndex == quizContent.count - 1 ? "결과보기" : "다음으로")
-                                    .font(.title2)
+                                Text(answerHint)
+                                    .font(.title)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
-                                
-                                Spacer()
-                                
-                                Image(systemName: "chevron.right")
-                                    .font(.title3)
-                                    .foregroundColor(.white.opacity(0.8))
-                            }
-                            .padding(.vertical, 20)
-                            .padding(.horizontal, 25)
-                            .background(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .fill(
-                                        LinearGradient(
-                                            gradient: Gradient(colors: [
-                                                currentIndex == quizContent.count - 1
-                                                    ? Color.green.opacity(0.9)
-                                                    : Color.blue.opacity(0.9),
-                                                currentIndex == quizContent.count - 1
-                                                    ? Color.teal.opacity(0.8)
-                                                    : Color.indigo.opacity(0.8)
-                                            ]),
-                                            startPoint: .leading,
-                                            endPoint: .trailing
-                                        )
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 15)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 15)
+                                            .fill(Color.white.opacity(0.15))
+                                            .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
                                     )
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color.white.opacity(0.2), lineWidth: 1)
-                            )
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 15)
+                                            .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                    )
+                            }
+                            .padding(.horizontal, 25)
+                            
+                         
+                            VStack(spacing: 15) {
+                                HStack {
+                                    Image(systemName: "photo.fill")
+                                        .font(.title3)
+                                        .foregroundColor(.white)
+                                    
+                                    Text("문제 이미지")
+                                        .font(.headline)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.white)
+                                }
+                                
+                                Image(currentImage)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(
+                                        width: isKeyboardVisible
+                                            ? min(geometry.size.width - 50, 320) * 0.4
+                                            : min(geometry.size.width - 50, 320),
+                                        height: isKeyboardVisible
+                                            ? min(geometry.size.width - 50, 320) * 0.4
+                                            : min(geometry.size.width - 50, 320)
+                                    )
+                                    .animation(.easeInOut(duration: 0.3), value: isKeyboardVisible)
+                                    .background(Color.white)
+                                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .stroke(Color.white.opacity(0.3), lineWidth: 2)
+                                    )
+                                    .shadow(color: .black.opacity(0.3), radius: 15, x: 0, y: 8)
+                            }
+                            .padding(.horizontal, 25)
+                            
+                      
+                            VStack(spacing: 20) {
+                                HStack {
+                                    Image(systemName: "pencil.circle.fill")
+                                        .font(.title3)
+                                        .foregroundColor(.white)
+                                    
+                                    Text("답안 입력")
+                                        .font(.headline)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.white)
+                                }
+                                
+                                TextField("정답을 입력하세요", text: $userInput)
+                                    .font(.body)
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 18)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 15)
+                                            .fill(Color.white.opacity(0.9))
+                                            .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
+                                    )
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 15)
+                                            .stroke(Color.blue.opacity(0.3), lineWidth: 2)
+                                    )
+                                    .submitLabel(.done)
+                            }
+                            .padding(.horizontal, 25)
+                            
+                       
+                            Button(action: {
+                                handleSubmit()
+                            }) {
+                                HStack(spacing: 15) {
+                                    Image(systemName: currentIndex == quizContent.count - 1 ? "checkmark.circle.fill" : "arrow.right.circle.fill")
+                                        .font(.title2)
+                                        .foregroundColor(.white)
+                                    
+                                    Text(currentIndex == quizContent.count - 1 ? "결과보기" : "다음으로")
+                                        .font(.title2)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
+                                    
+                                    Spacer()
+                                    
+                                    Image(systemName: "chevron.right")
+                                        .font(.title3)
+                                        .foregroundColor(.white.opacity(0.8))
+                                }
+                                .padding(.vertical, 20)
+                                .padding(.horizontal, 25)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(
+                                            LinearGradient(
+                                                gradient: Gradient(colors: [
+                                                    currentIndex == quizContent.count - 1
+                                                        ? Color.green.opacity(0.9)
+                                                        : Color.blue.opacity(0.9),
+                                                    currentIndex == quizContent.count - 1
+                                                        ? Color.teal.opacity(0.8)
+                                                        : Color.indigo.opacity(0.8)
+                                                ]),
+                                                startPoint: .leading,
+                                                endPoint: .trailing
+                                            )
+                                        )
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                )
+                            }
+                            .padding(.horizontal, 25)
+                            .padding(.bottom, 30)
                         }
-                        .padding(.horizontal, 25)
-                        .padding(.bottom, 30)
                     }
                 }
             }
+        }
+        .alert("나가시겠습니까?", isPresented: $showExitAlert) {
+            Button("취소", role: .cancel) { }
+            Button("확인") {
+                toQuizSectionView = false
+            }
+        } message: {
+            Text("퀴즈를 종료하면 현재 진행상황이 저장되지 않습니다.")
         }
         .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in
             withAnimation(.easeInOut(duration: 0.3)) {
