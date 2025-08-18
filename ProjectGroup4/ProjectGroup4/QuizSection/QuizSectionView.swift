@@ -23,6 +23,7 @@ struct QuizSectionView: View {
     @Binding var saveSuccessToastMessage : Bool
     @State private var timeRemaining = 10.0
     @State private var timer: Timer?
+    @State private var isKeyboardVisible : Bool = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -177,7 +178,15 @@ struct QuizSectionView: View {
                             Image(currentImage)
                                 .resizable()
                                 .scaledToFit()
-//                                .frame(width: min(geometry.size.width - 50, 320), height: min(geometry.size.width - 50, 320))
+                                .frame(
+                                    width: isKeyboardVisible
+                                        ? min(geometry.size.width - 50, 320) * 0.4
+                                        : min(geometry.size.width - 50, 320),
+                                    height: isKeyboardVisible
+                                        ? min(geometry.size.width - 50, 320) * 0.4
+                                        : min(geometry.size.width - 50, 320)
+                                )
+                                .animation(.easeInOut(duration: 0.3), value: isKeyboardVisible)
                                 .background(Color.white)
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                                 .overlay(
@@ -215,9 +224,6 @@ struct QuizSectionView: View {
                                         .stroke(Color.blue.opacity(0.3), lineWidth: 2)
                                 )
                                 .submitLabel(.done)
-                                .onSubmit {
-                                    handleSubmit()
-                                }
                         }
                         .padding(.horizontal, 25)
                         
@@ -269,6 +275,16 @@ struct QuizSectionView: View {
                         .padding(.bottom, 30)
                     }
                 }
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in
+            withAnimation(.easeInOut(duration: 0.3)) {
+                isKeyboardVisible = true
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
+            withAnimation(.easeInOut(duration: 0.3)) {
+                isKeyboardVisible = false
             }
         }
         .onAppear {
